@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="index.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="index.js" defer></script>
+</head>
+<body>
+ 
+<div style="display: none;" id="app">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img width="50" src="https://openconnectivity.org/wp-content/uploads/2018/01/SIoT-logo-PNG.png">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- MENU -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Главная страница</a>
+                </li>
+                <!-- <navbar-menu v-for="item in menu_list" v-bind:todo="item" v-bind:key="item.text">{{item.text}}</navbar-menu>  -->
+                <!-- MENU END -->
+            </ul>
+        </div>
+    </nav>
+    <div class="container h-100 mt-4 mb-4">
+        <div class="row h-100">
+            <div class="col-12 col-sm-6 col-md-8">
+                <div>
+                <h5 class="h5">Ваши платежи</h5>
+                  <ul class="list-group mb-3">
+                      <li class="list-group-item d-flex justify-content-between lh-condensed border-0">
+                      <div class="h-100 left">
+                          <h6 class="my-0">Перевод № {{transfer_counter}}</h6>
+                          <small class="text-muted">Номер кошелька: </small>
+                      </div>
+                          <span class="text-muted">$12</span>
+                      </li>
+
+                  </ul>
+                  <div class="w-100 d-inline">
+                  <button v-on:click="show_modal_transfer" class="btn btn-primary btn-sm" style="float:right">Перевести</button>
+                  </div>
+                <!-- template for the modal component Edit and Delete -->
+                <div id="modal_transfer_inner" v-if="showModal_transfer"></div>
+                <!-- template for the modal component Edit and Delete -->
+
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                    <div class="h-100 right">
+                    <h5 class="h5 text-center">Профиль</h5>   
+                    <div class="container face m-0 p-0">
+                        <div class="row face m-0">
+                            <div class="row face background">
+                                <img style="object-fit: cover; width: 100px; height: 100px;" class="img-fluid rounded-circle" src="data:image/jpeg;base64,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" alt="" class="image_profile">
+                            </div>      
+                        </div>  
+                    </div>      
+                    <div class="container fio m-0 mt-3">
+                        <div>{{name}} {{family}}</div>
+                    </div>   
+                    
+                    <div class="container currency mt-1 mb-3">Ваш баланс - {{balance}}$</div>        
+                    <div class="container edit">
+                    <button @click="redact_user(); showModal_delete = false; showModal_redact = true" type="button" class="btn btn-primary btn-sm hell" style="width:49%; float:left; margin-right: 1%; border-radius: 0px;">Редактировать</button>
+                    <button @click="delete_user(); showModal_delete = true; showModal_redact = false" type="button" class="btn btn-primary btn-sm" style="width:50%; border-radius: 0px;">Удалить</button>
+
+                    <!-- template for the modal component Edit and Delete -->
+                    <div id="modal_edit_inner" v-if="showModal_redact"></div>
+                    <div id="modal_delete_inner" v-if="showModal_delete"></div>
+                    <!-- template for the modal component Edit and Delete -->
+                      
+                    
+                    </div>        
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  <!-- template for the modal component -->
+
+</body>
+</html>

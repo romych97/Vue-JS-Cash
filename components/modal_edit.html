@@ -1,0 +1,47 @@
+
+      <div class='modal-mask'>
+        <div class='modal-wrapper'>
+          <div class='modal-container'>
+
+            <div class='modal-header'>
+              <slot name='header'>
+                Редактирование профиля
+              </slot>
+            </div>
+
+            <div class='modal-body'>
+              <slot name='body'>
+                <div>
+                  <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-ssm">Имя</span>
+                    </div>
+                    <input @input="redact_user_name" v-bind:value="name" id="red_name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                  </div>
+                  <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                      <span id="red_family" class="input-group-text" id="inputGroup-sizing-ssm">Фамилия</span>
+                    </div>
+                    <input @input="redact_user_family" v-bind:value="family" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-ssm">
+                  </div>
+                </div>
+                <div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                      <span class="input-group-text">{{balance}}.00</span>
+                    </div>
+                    <input @input="changeRedactUser" v-bind:value="balance" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  </div>
+                </div>
+              </slot>
+            </div>
+
+            <div class='modal-footer'>
+              <slot name='footer'>
+                <button class='btn btn-primary btn-sm hell' @click="redact_user">OK</button>
+              </slot>
+            </div>
+          </div>
+        </div>
+      </div>
